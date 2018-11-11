@@ -1,0 +1,5 @@
+pokemon_number,pokemon_name,base_hp,base_attack,base_defence,base_special_attack,base_special_defence,base_speed
+358,chimecho,75,50,80,95,90,65
+213,shuckle,20,10,230,10,230,5
+350,milotic,95,60,79,100,125,81
+468,togekiss,85,50,95,120,115,80

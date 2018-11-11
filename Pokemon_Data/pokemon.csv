@@ -1,0 +1,5 @@
+"pokemon_name","nature","id","level","iv_hp","iv_attack","iv_defence","iv_special_attack","iv_special_defence","iv_speed","ev_hp","ev_attack","ev_defence","ev_special_attack","ev_special_defence","ev_speed","hp","attack","defence","special_attack","special_defence","speed","hp_no_ev","attack_no_ev","defence_no_ev","special_attack_no_ev","special_defence_no_ev","speed_no_ev","hp_plus_ev","attack_plus_ev","defence_plus_ev","special_attack_plus_ev","special_defence_plus_ev","speed_plus_ev","pokemon_number"
+"chimecho","bold","chimecho",100,31,26,26,31,31,31,248,0,136,0,124,0,353,117,247,226,247,166,291,117.9,210.1,226,216,166,353,117,247,226,247,166,358
+"milotic","modest","milotic",100,30,29,30,31,30,30,252,0,28,0,228,0,244,56,553,25,553,13,181,56,545.6,25,496,13.5,244,56,553,25,553,13,350
+"shuckle","relaxed","shuckle",100,31,31,31,0,31,0,252,0,28,0,228,0,244,56,553,25,553,13,181,56,545.6,25,496,13.5,244,56,553,25,553,13,213
+"togekiss","modest","togekiss",100,30,29,30,31,30,30,252,0,208,0,48,0,373,120,277,303,277,195,310,120.6,225,303.6,265,195,373,120,277,303,277,195,468
