@@ -3,41 +3,35 @@
 ###
 
 #####
-##### Download and set packages
+##### Load data
 #####
-# install.packages("rvest")
-library("rvest")
+pokemon = read.csv(file = "Pokemon_Data\\pokemon.csv", stringsAsFactors = FALSE)
+pokemon_list = read.csv(file = "Standard_Data\\pokemon_master_list.csv", stringsAsFactors = FALSE)
+natures = read.csv(file = "Standard_Data\\natures.csv", stringsAsFactors = FALSE)
+
+###
+### Update pokemon_list
+###
+
+pokemon_list_update = get_pokemon_details(151,1)
+pokemon_list_update = get_pokemon_details(213)
+pokemon_list_update = get_pokemon_details(350)
+pokemon_list_update = get_pokemon_details(358)
+pokemon_list_update = get_pokemon_details(445)
+pokemon_list_update = get_pokemon_details(807,1)
 
 
 
+for(i in 1:nrow(pokemon_list_update)){
+  row = pokemon_list_update[i,]
+  
+  if(nrow(pokemon_list[pokemon_list["pokemon_number"]==row["pokemon_number"][[1]],])==0){
+    pokemon_list = rbind(pokemon_list,row)
+  }else{
+    pokemon_list[pokemon_list["pokemon_number"]==row["pokemon_number"][[1]],] = row
+  }
+}
 
-#Specifying the url for desired website to be scrapped
-number = "445"
-url <- paste("https://www.serebii.net/pokedex-sm/",number,".shtml",sep="")
+pokemon_list = pokemon_list[order(pokemon_list["pokemon_number"]),]
 
-#Reading the HTML code from the website
-webpage <- read_html(url)
-
-
-#Using CSS selectors to scrap the rankings section
-bold_data_html = html_nodes(webpage,'b')
-bold_data <- html_text(bold_data_html)
-
-name_xml = trimws(bold_data[13])
-pokemon_name = substr(name_xml,7,nchar(name_xml))
-
-
-#Converting the ranking data to text
-rank_data <- html_text(bold_data_html)
-
-#Let's have a look at the rankings
-head(rank_data[13])
-
-ability_data_html = html_nodes(webpage,'td.fooinfo')
-ability_data_html = html_nodes(webpage,'tr')
-ability_data <- html_text(ability_data_html)
-
-
-
-
-
+write.csv(pokemon_list, file = "Standard_Data\\pokemon_master_list.csv", row.names = FALSE)
