@@ -233,14 +233,21 @@ get_index_from_string <- function(html_code,string){
   return(index)
 }
 
-get_pokemon_details <- function(end_num,start_num=0){
+get_pokemon_details <- function(end_num,start_num=0,append=TRUE){
   
   #Specifying the url for desired website to be scrapped
   if(start_num==0){start_num=end_num}
   base_url = "https://www.serebii.net/"
   game = "pokedex-sm/"
+  file = "Standard_Data\\pokemon_master_list.csv"
   df = data.frame("pokemon_number"="","pokemon_name"="","base_total"="","base_total_sum"="","difference"="","base_hp"="","base_attack"="","base_defence"="","base_special_attack"="","base_special_defence"="","base_speed"="",stringsAsFactors = FALSE)
   
+  if(append!=TRUE){
+    file.remove(file)
+    file.create(file)
+    df = df[-c(1), ]
+    write.table(df, file, sep = ",", append = FALSE, quote = FALSE, col.names = TRUE, row.names = FALSE)
+  }
   
   for(i in start_num:end_num){
     number = substring(paste0("000",i),nchar(i)+1)
@@ -270,15 +277,32 @@ get_pokemon_details <- function(end_num,start_num=0){
     # Create pokemon record
     base_total = as.numeric(substring(stats_base[1],21))
     base_total_sum = as.numeric(stats_base[2])+as.numeric(stats_base[3])+as.numeric(stats_base[4])+as.numeric(stats_base[5])+as.numeric(stats_base[6])+as.numeric(stats_base[7])
-    record = data.frame("pokemon_number"=number,"pokemon_name"=pokemon_name,"base_total"=base_total,"base_total_sum"=base_total_sum,"difference"=total_stats-total_stats_sum,"base_hp"=stats_base[2],"base_attack"=stats_base[3],"base_defence"=stats_base[4],"base_special_attack"=stats_base[5],"base_special_defence"=stats_base[6],"base_speed"=stats_base[7],stringsAsFactors = FALSE)
+    record = data.frame("pokemon_number"=number,"pokemon_name"=pokemon_name,"base_total"=base_total,"base_total_sum"=base_total_sum,"difference"=base_total-base_total_sum,"base_hp"=stats_base[2],"base_attack"=stats_base[3],"base_defence"=stats_base[4],"base_special_attack"=stats_base[5],"base_special_defence"=stats_base[6],"base_speed"=stats_base[7],stringsAsFactors = FALSE)
     
     # Append to full record
-    df = rbind(df,record)
+    write.table(record, file, sep = ",", append = TRUE, quote = FALSE, col.names = FALSE, row.names = FALSE)
   }
-  
-  # Remove first row and reindex
-  df = df[-c(1), ]
-  rownames(df) <- 1:nrow(df)
 
-  return(df)
+  print("Data collected")
 }
+
+prepare_pokemon_details <- function(){
+  
+  # Prepare variables
+  file = "Standard_Data\\pokemon_master_list.csv"
+  
+  # Load data
+  pokemon_list = as.data.frame(read.csv(file, stringsAsFactors = FALSE))
+
+  # Deduplicate the data
+  pokemon_list = pokemon_list[!duplicated(pokemon_list), ]
+
+  # Reorder data
+  pokemon_list = pokemon_list[order(pokemon_list["pokemon_number"]),]
+
+  # Export data
+  write.csv(pokemon_list, file, quote = FALSE, row.names = FALSE)
+  
+  print("Data prepared")
+}
+
