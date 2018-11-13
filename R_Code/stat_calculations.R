@@ -22,6 +22,17 @@ pokemon_id = "chimecho"
 pokemon_id = "milotic"
 pokemon_id = "togekiss"
 pokemon_id = "chimecho2"
+
+chimecho
+milotic
+togekiss
+shuckle_bol
+shuckle_rel
+toxapex
+comfey
+
+
+
 pokemon_details = pokemon_data[pokemon_data["id"]==pokemon_id,]
 
 
@@ -30,6 +41,8 @@ pokemon_details = pokemon_data[pokemon_data["id"]==pokemon_id,]
 pokemon_details = reset_evs(pokemon_details)
 
 pokemon_details = get_bulk_split(pokemon_details,127,eviolite="Y")
+
+pokemon_details = get_bulk_split(pokemon_details,127,eviolite="N")
 
 
 get_stats(pokemon_details,"ev")

@@ -265,7 +265,7 @@ get_pokemon_details <- function(end_num,start_num=0,append=TRUE){
 
     # Set table variables
     name_dextab = pokemon_dextab[1]
-    pokedex_dextab = pokemon_dextab[2]
+    # pokedex_dextab = pokemon_dextab[2]
 
     stats_index = get_index_from_string(pokemon_dextable,"<b>Stats</b>")
     stats_dextable = pokemon_dextable[stats_index]
